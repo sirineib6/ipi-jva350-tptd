@@ -1,8 +1,8 @@
-package com.ipi.jva350.model;
+package com.ipi.jva350.service;
 
 import com.ipi.jva350.exception.SalarieException;
+import com.ipi.jva350.model.SalarieAideADomicile;
 import com.ipi.jva350.repository.SalarieAideADomicileRepository;
-import com.ipi.jva350.service.SalarieAideADomicileService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
