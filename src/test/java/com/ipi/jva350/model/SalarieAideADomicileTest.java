@@ -125,4 +125,65 @@ class SalarieAideADomicileTest {
         Assertions.assertEquals(count, nbJoursDansPlage.size());
     }
 
+
+    @Test
+    void testALegalementDroitADesCongesPayesFalse() {
+        // Given
+        SalarieAideADomicile s = new SalarieAideADomicile();
+        s.setJoursTravaillesAnneeNMoins1(0); // Cas avec 0 jour travaillé
+        // When
+        boolean res = s.aLegalementDroitADesCongesPayes();
+        // Then
+        Assertions.assertFalse(res); // Ne doit pas avoir droit aux congés payés avec 0 jour travaillé
+    }
+
+    @Test
+    void testALegalementDroitADesCongesPayesTrue() {
+        // Given
+        SalarieAideADomicile s = new SalarieAideADomicile();
+        s.setJoursTravaillesAnneeNMoins1(15); // Cas avec 15 jours travaillés
+        // When
+        boolean res = s.aLegalementDroitADesCongesPayes();
+        // Then
+        Assertions.assertTrue(res); // Doit avoir droit aux congés payés avec 15 jours travaillés
+    }
+
+    @Test
+    void testALegalementDroitADesCongesPayesAuxLimites() {
+        // Given
+        SalarieAideADomicile s = new SalarieAideADomicile();
+        s.setJoursTravaillesAnneeNMoins1(10); // Cas limite de 10 jours travaillés
+        // When
+        boolean res = s.aLegalementDroitADesCongesPayes();
+        // Then
+        Assertions.assertTrue(res); // Devrait avoir droit aux congés payés avec 10 jours travaillés
+    }
+
+    @Test
+    void testCalculeJoursDeCongeDecomptesPourPlage() {
+        // Given
+        SalarieAideADomicile s = new SalarieAideADomicile();
+        LocalDate dateDebut = LocalDate.parse("2023-10-01");
+        LocalDate dateFin = LocalDate.parse("2023-10-05");
+        // When
+        LinkedHashSet<LocalDate> joursDeConge = s.calculeJoursDeCongeDecomptesPourPlage(dateDebut, dateFin);
+        // Then
+        Assertions.assertNotNull(joursDeConge);
+        Assertions.assertEquals(3, joursDeConge.size()); // Vérifie que les jours sont bien comptabilisés
+    }
+
+    @Test
+    void testCalculeJoursDeCongeDecomptesPourPlagePasDeJour() {
+        // Given
+        SalarieAideADomicile s = new SalarieAideADomicile();
+        LocalDate dateDebut = LocalDate.parse("2023-10-01");
+        LocalDate dateFin = LocalDate.parse("2023-10-01");
+        // When
+        LinkedHashSet<LocalDate> joursDeConge = s.calculeJoursDeCongeDecomptesPourPlage(dateDebut, dateFin);
+        // Then
+        Assertions.assertNotNull(joursDeConge);
+        Assertions.assertEquals(0, joursDeConge.size()); // Vérifie qu'il n'y a pas de jours de congé dans la plage donnée
+    }
+
+
 }
