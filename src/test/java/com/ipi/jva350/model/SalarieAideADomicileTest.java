@@ -1,5 +1,6 @@
 package com.ipi.jva350.model;
 
+import com.ipi.jva350.exception.SalarieException;
 import com.ipi.jva350.model.Salarie;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
